@@ -10,4 +10,6 @@ module org.example.arabicsearchengine {
 
     opens org.example.arabicsearchengine to javafx.fxml;
     exports org.example.arabicsearchengine;
+    exports org.example.arabicsearchengine.controllers;
+    opens org.example.arabicsearchengine.controllers to javafx.fxml;
 }
