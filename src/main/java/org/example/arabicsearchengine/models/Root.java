@@ -2,10 +2,12 @@ package org.example.arabicsearchengine.models;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Root implements Comparable<Root> {
     private final String rootLetters;
+    private List<DerivedWord>  derivedWords;
     private int frequency;
     private boolean validated;
 
@@ -14,6 +16,7 @@ public class Root implements Comparable<Root> {
             throw new IllegalArgumentException("Root must contain exactly 3 Arabic letters");
         }
         this.rootLetters = rootLetters;
+        this.derivedWords = new ArrayList<>();
         this.frequency = 0;
         this.validated = true;
     }
@@ -48,6 +51,18 @@ public class Root implements Comparable<Root> {
 
     public void setFrequency(int frequency) {
         this.frequency = frequency;
+    }
+
+    public List<DerivedWord> getDerivedWords() {
+        return derivedWords;
+    }
+
+    public void setDerivedWords(List<DerivedWord> derivedWords) {
+        this.derivedWords = derivedWords;
+    }
+
+    public void addDerivedWord(DerivedWord derivedWord) {
+        this.derivedWords.add(derivedWord);
     }
 
     @Override
