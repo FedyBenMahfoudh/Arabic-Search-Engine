@@ -1,6 +1,5 @@
-package datastructures;
+package org.example.arabicsearchengine.datastructures.tree;
 
-import org.example.arabicsearchengine.datastructures.tree.AVLTree;
 import org.example.arabicsearchengine.models.Root;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
