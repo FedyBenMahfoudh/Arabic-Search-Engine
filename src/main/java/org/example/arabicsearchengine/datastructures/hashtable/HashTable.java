@@ -145,7 +145,7 @@ public class HashTable<K, V> {
         }
     }
 
-    private void clear(){
+    public void clear(){
         buckets = new HashNode[capacity];
         size = 0;
     }
