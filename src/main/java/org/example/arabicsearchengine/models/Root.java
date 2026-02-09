@@ -53,6 +53,9 @@ public class Root implements Comparable<Root> {
         this.frequency = frequency;
     }
 
+    public void incrementFrequency() {
+        this.frequency++;
+    }
     public List<DerivedWord> getDerivedWords() {
         return derivedWords;
     }
