@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.arabicsearchengine.controllers.PatternManagementController"
+      spacing="14" styleClass="view-container"
+      nodeOrientation="RIGHT_TO_LEFT"
+      prefWidth="760" prefHeight="620">
+
+    <padding>
+        <Insets top="20" right="24" bottom="20" left="24"/>
+    </padding>
+
+    <!-- Header -->
+    <HBox alignment="CENTER_RIGHT" spacing="12">
+        <FontIcon iconLiteral="mdi2s-shape" iconSize="32" iconColor="#1B5E59"/>
+        <VBox spacing="2" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+            <Label text="إدارة الأوزان" styleClass="view-title,arabic-text"/>
+            <Label text="إضافة وتعديل الأوزان الصرفية" styleClass="arabic-text"
+                   style="-fx-text-fill: #5F5F5F; -fx-font-size: 12px;"/>
+        </VBox>
+        <Button text="تحميل الافتراضي" onAction="#loadDefaultPatterns" styleClass="secondary-button">
+            <graphic>
+                <FontIcon iconLiteral="mdi2r-restore" iconSize="16"/>
+            </graphic>
+        </Button>
+    </HBox>
+
+    <Separator/>
+
+    <!-- Add Pattern Form -->
+    <VBox styleClass="card" spacing="14" style="-fx-padding: 18;">
+        <HBox spacing="8" alignment="CENTER_LEFT">
+            <FontIcon iconLiteral="mdi2p-plus-circle" iconSize="18" iconColor="#1B5E59"/>
+            <Label text="إضافة وزن صرفي جديد" styleClass="form-section-header,arabic-text"
+                   style="-fx-font-size: 15px; -fx-padding: 0;"/>
+        </HBox>
+
+        <!-- Row 1: Pattern ID & Structure -->
+        <HBox spacing="16" alignment="CENTER_LEFT">
+            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                <Label text="معرّف الوزن" styleClass="arabic-text"
+                       style="-fx-font-weight: 600; -fx-font-size: 12px; -fx-text-fill: #1B5E59;"/>
+                <TextField fx:id="txtPatternId" promptText="مثال: فاعل"
+                           styleClass="arabic-input" style="-fx-font-size: 14px; -fx-padding: 8;"/>
+            </VBox>
+            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                <Label text="البنية" styleClass="arabic-text"
+                       style="-fx-font-weight: 600; -fx-font-size: 12px; -fx-text-fill: #1B5E59;"/>
+                <TextField fx:id="txtStructure" promptText="استخدم ف-ع-ل"
+                           styleClass="arabic-input" style="-fx-font-size: 14px; -fx-padding: 8;"/>
+            </VBox>
+            <VBox spacing="6" prefWidth="140">
+                <Label text="الفئة" styleClass="arabic-text"
+                       style="-fx-font-weight: 600; -fx-font-size: 12px; -fx-text-fill: #1B5E59;"/>
+                <ComboBox fx:id="cmbCategory" maxWidth="Infinity"
+                          style="-fx-font-size: 13px;"/>
+            </VBox>
+        </HBox>
+
+        <!-- Row 2: Description -->
+        <VBox spacing="6">
+            <Label text="الوصف" styleClass="arabic-text"
+                   style="-fx-font-weight: 600; -fx-font-size: 12px; -fx-text-fill: #1B5E59;"/>
+            <TextField fx:id="txtDescription" promptText="وصف مختصر للوزن الصرفي"
+                       styleClass="arabic-input" style="-fx-font-size: 14px; -fx-padding: 8;"/>
+        </VBox>
+
+        <!-- Add Button -->
+        <HBox alignment="CENTER" style="-fx-padding: 6 0 0 0;">
+            <Button text="إضافة الوزن" onAction="#addPattern" styleClass="primary-button"
+                    prefWidth="150" prefHeight="36">
+                <graphic>
+                    <FontIcon iconLiteral="mdi2p-plus" iconSize="16" iconColor="white"/>
+                </graphic>
+            </Button>
+        </HBox>
+    </VBox>
+
+    <Separator/>
+
+    <!-- Pattern Table -->
+    <VBox spacing="8" VBox.vgrow="ALWAYS" style="-fx-min-height: 200;">
+        <HBox alignment="CENTER_LEFT" spacing="8">
+            <FontIcon iconLiteral="mdi2t-table" iconSize="16" iconColor="#1B5E59"/>
+            <Label text="الأوزان الصرفية المحفوظة" styleClass="form-section-header,arabic-text"
+                   style="-fx-font-size: 14px; -fx-padding: 0;"/>
+        </HBox>
+        <TableView fx:id="patternTable" VBox.vgrow="ALWAYS" styleClass="data-table"
+                   style="-fx-min-height: 180; -fx-pref-height: 250;">
+            <columns>
+                <TableColumn fx:id="colPatternId" text="الوزن" prefWidth="100" minWidth="80"/>
+                <TableColumn fx:id="colStructure" text="البنية" prefWidth="120" minWidth="100"/>
+                <TableColumn fx:id="colDescription" text="الوصف" prefWidth="220" minWidth="150"/>
+                <TableColumn fx:id="colCategory" text="الفئة" prefWidth="100" minWidth="80"/>
+                <TableColumn fx:id="colActions" text="الإجراءات" prefWidth="120" minWidth="100" sortable="false" resizable="false"/>
+            </columns>
+            <placeholder>
+                <VBox alignment="CENTER" spacing="8" style="-fx-padding: 20;">
+                    <FontIcon iconLiteral="mdi2s-shape-outline" iconSize="32" iconColor="#9A9A9A"/>
+                    <Label text="لا توجد أوزان محفوظة" styleClass="arabic-text"
+                           style="-fx-text-fill: #9A9A9A; -fx-font-size: 13px;"/>
+                </VBox>
+            </placeholder>
+        </TableView>
+    </VBox>
+</VBox>

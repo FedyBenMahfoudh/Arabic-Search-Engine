@@ -15,27 +15,32 @@ public class ValidationService {
     private final MorphologyService morphologyService;
 
     public ValidationService(RootRepository rootRepository,
-                             PatternRepository patternRepository,
-                             MorphologyService morphologyService) {
+            PatternRepository patternRepository,
+            MorphologyService morphologyService) {
         this.rootRepository = rootRepository;
         this.patternRepository = patternRepository;
         this.morphologyService = morphologyService;
     }
 
     /**
-     * Validates a word against a root.
-     * Checks if the word can be derived from the given root.
+     * Validates a word against a specific root.
+     * Returns OUI/NON with identified pattern if valid.
      */
     public ValidationResult validateWord(String word, String rootLetters) {
-        // Check if root exists
-        Root root = rootRepository.findByLetters(rootLetters);
-        if (root == null) {
-            return ValidationResult.failure(
-                    "Root '" + rootLetters + "' not found in the database");
+        if (!isValidRootFormat(rootLetters)) {
+            return ValidationResult.failure("الجذر يجب أن يكون 3 أحرف عربية");
         }
 
-        // Try to find a matching pattern
+        Root root = rootRepository.findByLetters(rootLetters);
+        if (root == null) {
+            return ValidationResult.failure("الجذر '" + rootLetters + "' غير موجود في قاعدة البيانات");
+        }
+
         List<Pattern> patterns = patternRepository.findAll();
+        if (patterns == null || patterns.isEmpty()) {
+            return ValidationResult.failure("لا توجد صيغ متاحة");
+        }
+
         Pattern matchingPattern = morphologyService.findMatchingPattern(word, root, patterns);
 
         if (matchingPattern != null) {
@@ -43,24 +48,27 @@ public class ValidationService {
             root.addDerivedWord(derived);
             root.incrementFrequency();
             return ValidationResult.success(root, matchingPattern,
-                    "Word '" + word + "' is valid. Derived from root '" + rootLetters +
-                            "' using pattern '" + matchingPattern.getPatternId() + "'");
+                    "✓ نعم - الكلمة '" + word + "' صحيحة - مشتقة من الجذر '" + rootLetters +
+                            "' بالصيغة '" + matchingPattern.getPatternId() + "'");
         } else {
             return ValidationResult.failure(
-                    "Word '" + word + "' cannot be derived from root '" + rootLetters +
-                            "' using any known pattern");
+                    "✗ لا - الكلمة '" + word + "' لا يمكن اشتقاقها من الجذر '" + rootLetters + "'");
         }
     }
+
     /**
-     * Validates a word against all known roots.
-     * Attempts to find any root + pattern combination that produces the word.
+     * Identifies a word by finding its root and pattern.
+     * Returns OUI/NON with identified root and pattern.
      */
     public ValidationResult identifyWord(String word) {
         List<Root> allRoots = rootRepository.findAll();
         List<Pattern> allPatterns = patternRepository.findAll();
 
-        MorphologyService.DecompositionResult result =
-                morphologyService.decomposeWord(word, allRoots, allPatterns);
+        if (allRoots == null || allRoots.isEmpty() || allPatterns == null || allPatterns.isEmpty()) {
+            return ValidationResult.failure("قاعدة البيانات غير كاملة - جذور أو صيغ غير متاحة");
+        }
+
+        MorphologyService.DecompositionResult result = morphologyService.decomposeWord(word, allRoots, allPatterns);
 
         if (result.isFound()) {
             Root root = result.getRoot();
@@ -68,23 +76,27 @@ public class ValidationService {
             DerivedWord derived = new DerivedWord(word, root, pattern);
             root.addDerivedWord(derived);
             root.incrementFrequency();
-            return ValidationResult.success(result.getRoot(), result.getPattern(),
-                    "Word '" + word + "' identified. Root: '" + result.getRoot().getRootLetters() +
-                            "', Pattern: '" + result.getPattern().getPatternId() + "'");
+            return ValidationResult.success(root, pattern,
+                    "✓ نعم - تم تحديد الكلمة '" + word + "' - الجذر: '" + root.getRootLetters() +
+                            "' - الصيغة: '" + pattern.getPatternId() + "'");
         } else {
             return ValidationResult.failure(
-                    "Word '" + word + "' could not be matched to any known root+pattern combination");
+                    "✗ لا - لم يتمكن من تحديد الكلمة '" + word + "' (الجذر والصيغة غير متطابقة)");
         }
     }
 
-    /**Validates that a string is a valid triliteral Arabic root.*/
+    /** Validates that a string is a valid 3-letter Arabic root. */
     public boolean isValidRootFormat(String root) {
-        if (root == null || root.length() != 3) {
+        if (root == null || root.trim().isEmpty()) {
             return false;
         }
-        // Check that all characters are Arabic letters
+        root = root.trim();
+        if (root.length() != 3) {
+            return false;
+        }
+        // Check that all characters are Arabic letters (Unicode range U+0600 to U+06FF)
         for (char c : root.toCharArray()) {
-            if (c < '\u0621' || c > '\u064A') {  // Arabic letter range
+            if (c < '\u0600' || c > '\u06FF') {
                 return false;
             }
         }

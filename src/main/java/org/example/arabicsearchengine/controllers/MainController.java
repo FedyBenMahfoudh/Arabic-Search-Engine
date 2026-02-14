@@ -47,7 +47,7 @@ public class MainController {
 
     @FXML
     private void showRootManagement() {
-        loadView("/views/RootManagementView.fxml", controller -> {
+        loadView("/org/example/arabicsearchengine/views/RootView.fxml", controller -> {
             if (controller instanceof RootManagementController rmc) {
                 rmc.setServices(rootService, patternService, this::updateStatusBar);
             }
@@ -58,7 +58,7 @@ public class MainController {
 
     @FXML
     private void showPatternManagement() {
-        loadView("/views/PatternManagementView.fxml", controller -> {
+        loadView("/org/example/arabicsearchengine/views/PatternView.fxml", controller -> {
             if (controller instanceof PatternManagementController pmc) {
                 pmc.setServices(patternService, this::updateStatusBar);
             }
@@ -69,7 +69,7 @@ public class MainController {
 
     @FXML
     private void showWordGeneration() {
-        loadView("/views/WordGenerationView.fxml", controller -> {
+        loadView("/org/example/arabicsearchengine/views/WordDerivationView.fxml", controller -> {
             if (controller instanceof WordGenerationController wgc) {
                 wgc.setServices(rootService, patternService, morphologyService);
             }
@@ -80,7 +80,7 @@ public class MainController {
 
     @FXML
     private void showValidation() {
-        loadView("/views/ValidationView.fxml", controller -> {
+        loadView("/org/example/arabicsearchengine/views/ValidationView.fxml", controller -> {
             if (controller instanceof ValidationController vc) {
                 vc.setServices(validationService, rootService);
             }
