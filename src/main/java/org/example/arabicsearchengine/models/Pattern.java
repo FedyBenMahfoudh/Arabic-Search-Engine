@@ -6,7 +6,6 @@ public class Pattern {
     private final String patternId;      // e.g., "فاعل", "مفعول"
     private final String structure;       // Abstract structure for transformation
     private String description;           // Human-readable description
-    private String category;
 
     // Arabic letters used as placeholders in patterns
     public static final char FA = 'ف';   // Placeholder for R1
@@ -17,14 +16,12 @@ public class Pattern {
         this.patternId = patternId;
         this.structure = structure;
         this.description = "";
-        this.category = "general";
     }
 
-    public Pattern(String patternId, String structure, String description, String category) {
+    public Pattern(String patternId, String structure, String description) {
         this.patternId = patternId;
         this.structure = structure;
         this.description = description;
-        this.category = category;
     }
 
     /**
@@ -65,17 +62,9 @@ public class Pattern {
         return description;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
     // --- Setters ---
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     // --- Object overrides ---
@@ -97,7 +86,6 @@ public class Pattern {
         return "Pattern{" +
                 "id='" + patternId + '\'' +
                 ", structure='" + structure + '\'' +
-                ", category='" + category + '\'' +
                 '}';
     }
 }

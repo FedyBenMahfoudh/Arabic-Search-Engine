@@ -215,11 +215,7 @@ public class CLIController {
         String description = scanner.nextLine().trim();
         if (description.isEmpty()) description = null;
 
-        System.out.print("الفئة الجديدة (Current: " + existing.getCategory() + "): ");
-        String category = scanner.nextLine().trim();
-        if (category.isEmpty()) category = null;
-
-        patternService.modifyPattern(id, structure, description, category);
+        patternService.modifyPattern(id, structure, description);
         formatter.printSuccess("تم تعديل الوزن بنجاح: " + id);
     }
 
@@ -244,10 +240,8 @@ public class CLIController {
         String structure = scanner.nextLine().trim();
         System.out.print("الوصف (Description): ");
         String desc = scanner.nextLine().trim();
-        System.out.print("الفئة (Category): ");
-        String cat = scanner.nextLine().trim();
 
-        patternService.addPattern(id, structure, desc, cat);
+        patternService.addPattern(id, structure, desc);
         formatter.printSuccess("تمت إضافة الوزن: " + id);
     }
 

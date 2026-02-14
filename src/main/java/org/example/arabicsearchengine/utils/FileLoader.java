@@ -72,7 +72,7 @@ public class FileLoader {
                         String structure = parts[1].trim();
                         String description = parts.length > 2 ? parts[2].trim() : "";
                         String category = parts.length > 3 ? parts[3].trim() : "general";
-                        patterns.add(new Pattern(id, structure, description, category));
+                        patterns.add(new Pattern(id, structure, description));
                     }
                 }
             }
@@ -98,7 +98,7 @@ public class FileLoader {
                         String structure = parts[1].trim();
                         String description = parts.length > 2 ? parts[2].trim() : "";
                         String category = parts.length > 3 ? parts[3].trim() : "general";
-                        patterns.add(new Pattern(id, structure, description, category));
+                        patterns.add(new Pattern(id, structure, description));
                     }
                 }
             }

@@ -101,7 +101,6 @@ public class OutputFormatter {
         System.out.println("  │ الوزن (Pattern): " + pattern.getPatternId());
         System.out.println("  │ البنية (Structure): " + pattern.getStructure());
         System.out.println("  │ الوصف (Description): " + pattern.getDescription());
-        System.out.println("  │ الفئة (Category): " + pattern.getCategory());
         System.out.println("  └─────────────────────────────");
     }
 

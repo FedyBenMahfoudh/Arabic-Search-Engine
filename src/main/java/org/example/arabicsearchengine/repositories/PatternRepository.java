@@ -41,11 +41,11 @@ public class PatternRepository {
     }
 
     /**Returns patterns filtered by category.*/
-    public List<Pattern> findByCategory(String category) {
+/*    public List<Pattern> findByCategory(String category) {
         return patternTable.values().stream()
                 .filter(p -> p.getCategory().equals(category))
                 .collect(Collectors.toList());
-    }
+    }*/
 
     /**Returns the number of stored patterns.*/
     public int count() {

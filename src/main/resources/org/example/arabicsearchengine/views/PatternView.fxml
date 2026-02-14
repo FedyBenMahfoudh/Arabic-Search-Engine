@@ -55,12 +55,6 @@
                 <TextField fx:id="txtStructure" promptText="استخدم ف-ع-ل"
                            styleClass="arabic-input" style="-fx-font-size: 14px; -fx-padding: 8;"/>
             </VBox>
-            <VBox spacing="6" prefWidth="140">
-                <Label text="الفئة" styleClass="arabic-text"
-                       style="-fx-font-weight: 600; -fx-font-size: 12px; -fx-text-fill: #1B5E59;"/>
-                <ComboBox fx:id="cmbCategory" maxWidth="Infinity"
-                          style="-fx-font-size: 13px;"/>
-            </VBox>
         </HBox>
 
         <!-- Row 2: Description -->
@@ -96,8 +90,7 @@
             <columns>
                 <TableColumn fx:id="colPatternId" text="الوزن" prefWidth="100" minWidth="80"/>
                 <TableColumn fx:id="colStructure" text="البنية" prefWidth="120" minWidth="100"/>
-                <TableColumn fx:id="colDescription" text="الوصف" prefWidth="220" minWidth="150"/>
-                <TableColumn fx:id="colCategory" text="الفئة" prefWidth="100" minWidth="80"/>
+                <TableColumn fx:id="colDescription" text="الوصف" prefWidth="220" minWidth="250" resizable="true"/>
                 <TableColumn fx:id="colActions" text="الإجراءات" prefWidth="120" minWidth="100" sortable="false" resizable="false"/>
             </columns>
             <placeholder>

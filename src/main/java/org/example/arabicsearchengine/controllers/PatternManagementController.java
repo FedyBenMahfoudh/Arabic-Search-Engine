@@ -15,15 +15,12 @@ import org.example.arabicsearchengine.models.Pattern;
 import org.example.arabicsearchengine.services.PatternService;
 
 public class PatternManagementController {
-
     @FXML
     private TextField txtPatternId;
     @FXML
     private TextField txtStructure;
     @FXML
     private TextField txtDescription;
-    @FXML
-    private ComboBox<String> cmbCategory;
     @FXML
     private TableView<Pattern> patternTable;
     @FXML
@@ -32,8 +29,6 @@ public class PatternManagementController {
     private TableColumn<Pattern, String> colStructure;
     @FXML
     private TableColumn<Pattern, String> colDescription;
-    @FXML
-    private TableColumn<Pattern, String> colCategory;
     @FXML
     private TableColumn<Pattern, Void> colActions;
 
@@ -50,7 +45,6 @@ public class PatternManagementController {
         colPatternId.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getPatternId()));
         colStructure.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getStructure()));
         colDescription.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDescription()));
-        colCategory.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getCategory()));
 
         // Setup actions column with edit and delete buttons
         colActions.setCellFactory(param -> new TableCell<Pattern, Void>() {
@@ -85,19 +79,6 @@ public class PatternManagementController {
                 }
             }
         });
-
-        // Setup category combobox
-        cmbCategory.setItems(FXCollections.observableArrayList(
-                "active_participle",
-                "passive_participle",
-                "verbal_noun",
-                "verb_form",
-                "intensive",
-                "noun_place",
-                "noun_instrument",
-                "adjective",
-                "general"));
-        cmbCategory.setValue("general");
     }
 
     public void setServices(PatternService patternService, Runnable statusUpdater) {
@@ -119,20 +100,18 @@ public class PatternManagementController {
         String id = txtPatternId.getText().trim();
         String structure = txtStructure.getText().trim();
         String description = txtDescription.getText().trim();
-        String category = cmbCategory.getValue();
 
         if (id.isEmpty() || structure.isEmpty()) {
             showError("الرجاء إدخال معرّف الوزن والبنية");
             return;
         }
 
-        patternService.addPattern(id, structure, description, category);
+        patternService.addPattern(id, structure, description);
 
         // Clear inputs
         txtPatternId.clear();
         txtStructure.clear();
         txtDescription.clear();
-        cmbCategory.setValue("general");
 
         refreshPatternList();
         statusUpdater.run();
@@ -211,25 +190,7 @@ public class PatternManagementController {
         editDescription.setPrefWidth(300);
         descriptionBox.getChildren().addAll(descriptionLabel, editDescription);
 
-        HBox categoryBox = new HBox(10);
-        Label categoryLabel = new Label("الفئة:");
-        categoryLabel.setPrefWidth(100);
-        ComboBox<String> editCategory = new ComboBox<>();
-        editCategory.setItems(FXCollections.observableArrayList(
-                "active_participle",
-                "passive_participle",
-                "verbal_noun",
-                "verb_form",
-                "intensive",
-                "noun_place",
-                "noun_instrument",
-                "adjective",
-                "general"));
-        editCategory.setValue(pattern.getCategory());
-        editCategory.setPrefWidth(300);
-        categoryBox.getChildren().addAll(categoryLabel, editCategory);
-
-        formBox.getChildren().addAll(patternIdBox, structureBox, descriptionBox, categoryBox);
+        formBox.getChildren().addAll(patternIdBox, structureBox, descriptionBox);
 
         // Buttons
         HBox buttonBox = new HBox(10);
@@ -240,7 +201,6 @@ public class PatternManagementController {
         saveBtn.setOnAction(event -> {
             String newStructure = editStructure.getText().trim();
             String newDescription = editDescription.getText().trim();
-            String newCategory = editCategory.getValue();
 
             if (newStructure.isEmpty()) {
                 showError("الرجاء إدخال البنية");
@@ -249,7 +209,7 @@ public class PatternManagementController {
 
             // Update pattern using the service
             try {
-                patternService.modifyPattern(pattern.getPatternId(), newStructure, newDescription, newCategory);
+                patternService.modifyPattern(pattern.getPatternId(), newStructure, newDescription);
                 refreshPatternList();
                 statusUpdater.run();
                 showInfo("تم تحديث الوزن بنجاح");
