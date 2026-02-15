@@ -68,6 +68,7 @@ public class Root implements Comparable<Root> {
         this.derivedWords.add(derivedWord);
     }
 
+
     @Override
     public int compareTo(Root o) {
         return this.getRootLetters().compareTo(o.getRootLetters());
