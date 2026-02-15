@@ -55,7 +55,7 @@
             <Separator style="-fx-padding: 8 0;">
             </Separator>
 
-            <Button fx:id="btnStats" text="الإحصائيات" styleClass="nav-button" onAction="#showStatistics" maxWidth="Infinity">
+            <Button fx:id="btnDerivedWords" text="المشتقات" styleClass="nav-button" onAction="#showDerivedWords" maxWidth="Infinity">
                 <graphic>
                     <FontIcon iconLiteral="mdi2c-chart-bar" iconSize="18"/>
                 </graphic>

@@ -3,14 +3,19 @@ package org.example.arabicsearchengine.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import org.example.arabicsearchengine.models.Root;
+import javafx.stage.Stage;
 import org.example.arabicsearchengine.models.ValidationResult;
 import org.example.arabicsearchengine.services.RootService;
 import org.example.arabicsearchengine.services.ValidationService;
 import org.kordamp.ikonli.javafx.FontIcon;
+
+import java.io.IOException;
 
 public class ValidationController {
 

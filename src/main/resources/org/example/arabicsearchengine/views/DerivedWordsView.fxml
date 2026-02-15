@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.arabicsearchengine.controllers.DerivedWordsController"
+      spacing="15"
+      nodeOrientation="RIGHT_TO_LEFT">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="المشتقات المسجلة"
+           style="-fx-font-size:18px; -fx-font-weight:bold;"/>
+
+    <HBox spacing="10">
+        <Label text="الجذر:"/>
+        <TextField fx:id="txtRootSearch" promptText="أدخل الجذر"/>
+        <Button text="عرض" onAction="#loadDerivedWords"/>
+    </HBox>
+
+    <TableView fx:id="tableView" VBox.vgrow="ALWAYS">
+
+        <columns>
+            <TableColumn fx:id="colWord" text="الكلمة" prefWidth="150"/>
+            <TableColumn fx:id="colPattern" text="الوزن" prefWidth="120"/>
+            <TableColumn fx:id="colFrequency" text="عدد المرات" prefWidth="100"/>
+        </columns>
+
+    </TableView>
+
+</VBox>

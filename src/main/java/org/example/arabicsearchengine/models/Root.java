@@ -94,4 +94,17 @@ public class Root implements Comparable<Root> {
                 ", validated=" + validated +
                 '}';
     }
+    public void addOrUpdateDerivedWord(String word, Pattern pattern) {
+        for (DerivedWord dw : derivedWords) {
+            if (dw.getWord().equals(word)) {
+                dw.incrementFrequency();
+                return;
+            }
+        }
+
+        // If not found, create new
+        DerivedWord newWord = new DerivedWord(word, this, pattern);
+        newWord.incrementFrequency();
+        derivedWords.add(newWord);
+    }
 }

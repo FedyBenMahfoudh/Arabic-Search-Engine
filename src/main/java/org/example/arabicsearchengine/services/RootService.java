@@ -53,4 +53,7 @@ public class RootService {
     public RootRepository getRepository() {
         return rootRepository;
     }
+    public Root findByLetters(String letters) {
+        return rootRepository.findByLetters(letters);
+    }
 }

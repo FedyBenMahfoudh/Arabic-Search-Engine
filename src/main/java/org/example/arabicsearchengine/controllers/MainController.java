@@ -9,10 +9,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import org.example.arabicsearchengine.repositories.PatternRepository;
 import org.example.arabicsearchengine.repositories.RootRepository;
-import org.example.arabicsearchengine.services.MorphologyService;
-import org.example.arabicsearchengine.services.PatternService;
-import org.example.arabicsearchengine.services.RootService;
-import org.example.arabicsearchengine.services.ValidationService;
+import org.example.arabicsearchengine.services.*;
 
 import java.io.IOException;
 
@@ -21,6 +18,8 @@ public class MainController {
     @FXML private VBox welcomePane;
     @FXML private Button btnRoots, btnPatterns, btnGenerate, btnValidate, btnStats;
     @FXML private Label lblRootCount, lblPatternCount, lblStatus;
+
+    @FXML private Button btnDerivedWords;
 
     private RootRepository rootRepository;
     private PatternRepository patternRepository;
@@ -78,6 +77,8 @@ public class MainController {
         lblStatus.setText("توليد الكلمات");
     }
 
+
+
     @FXML
     private void showValidation() {
         loadView("/org/example/arabicsearchengine/views/ValidationView.fxml", controller -> {
@@ -87,6 +88,14 @@ public class MainController {
         });
         setActiveButton(btnValidate);
         lblStatus.setText("التحقق الصرفي");
+    }
+    @FXML
+    private void showDerivedWords() {
+        loadView("/org/example/arabicsearchengine/views/DerivedWordsView.fxml", controller -> {
+            if (controller instanceof DerivedWordsController dc) {
+                dc.setRootService(rootService);
+            }
+        });
     }
 
     @FXML

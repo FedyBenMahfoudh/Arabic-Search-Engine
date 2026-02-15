@@ -44,8 +44,10 @@ public class ValidationService {
         Pattern matchingPattern = morphologyService.findMatchingPattern(word, root, patterns);
 
         if (matchingPattern != null) {
-            DerivedWord derived = new DerivedWord(word, root, matchingPattern);
-            root.addDerivedWord(derived);
+            /*DerivedWord derived = new DerivedWord(word, root, matchingPattern);
+            root.addDerivedWord(derived);*/
+
+            root.addOrUpdateDerivedWord(word, matchingPattern);
             root.incrementFrequency();
             return ValidationResult.success(root, matchingPattern,
                     "✓ نعم - الكلمة '" + word + "' صحيحة - مشتقة من الجذر '" + rootLetters +
@@ -55,6 +57,7 @@ public class ValidationService {
                     "✗ لا - الكلمة '" + word + "' لا يمكن اشتقاقها من الجذر '" + rootLetters + "'");
         }
     }
+
 
     /**
      * Identifies a word by finding its root and pattern.
@@ -73,8 +76,10 @@ public class ValidationService {
         if (result.isFound()) {
             Root root = result.getRoot();
             Pattern pattern = result.getPattern();
-            DerivedWord derived = new DerivedWord(word, root, pattern);
-            root.addDerivedWord(derived);
+            /*DerivedWord derived = new DerivedWord(word, root, pattern);
+            root.addDerivedWord(derived);*/
+            root.addOrUpdateDerivedWord(word, pattern);
+
             root.incrementFrequency();
             return ValidationResult.success(root, pattern,
                     "✓ نعم - تم تحديد الكلمة '" + word + "' - الجذر: '" + root.getRootLetters() +
