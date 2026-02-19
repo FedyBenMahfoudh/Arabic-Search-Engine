@@ -4,24 +4,28 @@ import org.example.arabicsearchengine.models.DerivedWord;
 import org.example.arabicsearchengine.models.Pattern;
 import org.example.arabicsearchengine.models.Root;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class MorphologyService {
 
-    /**Generates a derived word by applying a pattern to a root.*/
+    /**Generates a derived word by applying a pattern to a root.
+     * If the derived word already exists in the root's derived word list,
+     * its frequency is incremented. Otherwise, it is added as a new entry.*/
     public DerivedWord generateWord(Root root, Pattern pattern) {
         String word = pattern.applyToRoot(root);
-        return new DerivedWord(word, root, pattern);
+        DerivedWord derivedWord = new DerivedWord(word, root, pattern);
+        root.addDerivedWord(derivedWord);
+        return derivedWord;
     }
 
-    /**Generates all possible words from a root using all provided patterns.*/
+    /**Generates all possible words from a root using all provided patterns.
+     * Each derived word is checked against the root's existing list via addDerivedWord.*/
     public List<DerivedWord> generateAllWords(Root root, List<Pattern> patterns) {
-        List<DerivedWord> words = new ArrayList<>();
         for (Pattern pattern : patterns) {
-            words.add(generateWord(root, pattern));
+            generateWord(root, pattern);
         }
-        return words;
+        return root.getDerivedWords();
     }
 
     /**Attempts to decompose a word to find its root and pattern.*/

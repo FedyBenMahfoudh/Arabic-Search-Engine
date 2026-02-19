@@ -167,8 +167,7 @@ public class RootManagementController {
         rootInfoPane.setManaged(true);
         lblRootInfo.setText(
                 "الجذر: " + root.getRootLetters() + "\n" +
-                        "R1: " + root.getR1() + " | R2: " + root.getR2() + " | R3: " + root.getR3() + "\n" +
-                        "التكرار: " + root.getFrequency()
+                        "R1: " + root.getR1() + " | R2: " + root.getR2() + " | R3: " + root.getR3() + "\n"
         );
     }
 

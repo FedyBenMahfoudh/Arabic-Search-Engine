@@ -46,6 +46,12 @@
                 </graphic>
             </Button>
 
+            <Button fx:id="btnRootDerivation" text="الجذور والمشتقات" styleClass="nav-button" onAction="#showRootDerivation" maxWidth="Infinity">
+                <graphic>
+                    <FontIcon iconLiteral="mdi2f-file-tree" iconSize="18"/>
+                </graphic>
+            </Button>
+
             <Button fx:id="btnValidate" text="التحقق الصرفي" styleClass="nav-button" onAction="#showValidation" maxWidth="Infinity">
                 <graphic>
                     <FontIcon iconLiteral="mdi2c-check-decagram" iconSize="18"/>

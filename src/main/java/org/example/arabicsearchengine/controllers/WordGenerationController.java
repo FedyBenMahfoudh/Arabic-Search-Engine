@@ -88,7 +88,13 @@ public class WordGenerationController {
         }
 
         try {
-            Root root = new Root(rootLetters);
+            // Look up the existing root from the repository so derived words are persisted
+            Root root = rootService.searchRoot(rootLetters);
+            if (root == null) {
+                showError("الجذر غير موجود في القاعدة: " + rootLetters);
+                return;
+            }
+
             Pattern pattern = patternService.getPattern(patternId);
 
             if (pattern == null) {
@@ -125,7 +131,12 @@ public class WordGenerationController {
         }
 
         try {
-            Root root = new Root(rootLetters);
+            // Look up the existing root from the repository so derived words are persisted
+            Root root = rootService.searchRoot(rootLetters);
+            if (root == null) {
+                showError("الجذر غير موجود في القاعدة: " + rootLetters);
+                return;
+            }
             List<Pattern> patterns = patternService.getAllPatterns();
 
             if (patterns.isEmpty()) {

@@ -91,7 +91,6 @@ public class OutputFormatter {
         System.out.println("  ┌─────────────────────────────");
         System.out.println("  │ الجذر (Root): " + root.getRootLetters());
         System.out.println("  │ R1: " + root.getR1() + ", R2: " + root.getR2() + ", R3: " + root.getR3());
-        System.out.println("  │ التكرار (Frequency): " + root.getFrequency());
         System.out.println("  │ المشتقات (Derivatives): " + root.getDerivedWords().size());
         System.out.println("  └─────────────────────────────");
     }

@@ -15,4 +15,8 @@ module org.example.arabicsearchengine {
     exports org.example.arabicsearchengine;
     exports org.example.arabicsearchengine.controllers;
     opens org.example.arabicsearchengine.controllers to javafx.fxml;
+    exports org.example.arabicsearchengine.services;
+    exports org.example.arabicsearchengine.models;
+    exports org.example.arabicsearchengine.repositories;
+    exports org.example.arabicsearchengine.datastructures.tree;
 }

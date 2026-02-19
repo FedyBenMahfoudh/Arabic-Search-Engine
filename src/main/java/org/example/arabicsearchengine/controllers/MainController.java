@@ -19,7 +19,7 @@ import java.io.IOException;
 public class MainController {
     @FXML private StackPane contentArea;
     @FXML private VBox welcomePane;
-    @FXML private Button btnRoots, btnPatterns, btnGenerate, btnValidate, btnStats;
+    @FXML private Button btnRoots, btnPatterns, btnGenerate, btnRootDerivation, btnValidate, btnStats;
     @FXML private Label lblRootCount, lblPatternCount, lblStatus;
 
     private RootRepository rootRepository;
@@ -79,6 +79,17 @@ public class MainController {
     }
 
     @FXML
+    private void showRootDerivation() {
+        loadView("/org/example/arabicsearchengine/views/RootDerivationView.fxml", controller -> {
+            if (controller instanceof RootDerivationController rdc) {
+                rdc.setServices(rootService, patternService, morphologyService);
+            }
+        });
+        setActiveButton(btnRootDerivation);
+        lblStatus.setText("الجذور والمشتقات");
+    }
+
+    @FXML
     private void showValidation() {
         loadView("/org/example/arabicsearchengine/views/ValidationView.fxml", controller -> {
             if (controller instanceof ValidationController vc) {
@@ -91,7 +102,11 @@ public class MainController {
 
     @FXML
     private void showStatistics() {
-        showWelcomeWithStats();
+        loadView("/org/example/arabicsearchengine/views/StatisticsView.fxml", controller -> {
+            if (controller instanceof StatisticsController sc) {
+                sc.setServices(rootService);
+            }
+        });
         setActiveButton(btnStats);
         lblStatus.setText("الإحصائيات");
     }
@@ -129,6 +144,7 @@ public class MainController {
         btnRoots.getStyleClass().remove("nav-button-active");
         btnPatterns.getStyleClass().remove("nav-button-active");
         btnGenerate.getStyleClass().remove("nav-button-active");
+        btnRootDerivation.getStyleClass().remove("nav-button-active");
         btnValidate.getStyleClass().remove("nav-button-active");
         btnStats.getStyleClass().remove("nav-button-active");
 

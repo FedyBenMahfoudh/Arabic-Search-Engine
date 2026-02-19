@@ -1,6 +1,6 @@
 package org.example.arabicsearchengine.services;
 
-import org.example.arabicsearchengine.models.DerivedWord;
+
 import org.example.arabicsearchengine.models.Pattern;
 import org.example.arabicsearchengine.models.Root;
 import org.example.arabicsearchengine.models.ValidationResult;
@@ -44,9 +44,10 @@ public class ValidationService {
         Pattern matchingPattern = morphologyService.findMatchingPattern(word, root, patterns);
 
         if (matchingPattern != null) {
-            DerivedWord derived = new DerivedWord(word, root, matchingPattern);
-            root.addDerivedWord(derived);
-            root.incrementFrequency();
+            // Generate the word through morphologyService which handles:
+            //   - if word already exists in root's derivedWords -> increment frequency
+            //   - if not -> add it to the list
+            morphologyService.generateWord(root, matchingPattern);
             return ValidationResult.success(root, matchingPattern,
                     "✓ نعم - الكلمة '" + word + "' صحيحة - مشتقة من الجذر '" + rootLetters +
                             "' بالصيغة '" + matchingPattern.getPatternId() + "'");
@@ -73,9 +74,10 @@ public class ValidationService {
         if (result.isFound()) {
             Root root = result.getRoot();
             Pattern pattern = result.getPattern();
-            DerivedWord derived = new DerivedWord(word, root, pattern);
-            root.addDerivedWord(derived);
-            root.incrementFrequency();
+            // Generate the word through morphologyService which handles:
+            //   - if word already exists in root's derivedWords -> increment frequency
+            //   - if not -> add it to the list
+            morphologyService.generateWord(root, pattern);
             return ValidationResult.success(root, pattern,
                     "✓ نعم - تم تحديد الكلمة '" + word + "' - الجذر: '" + root.getRootLetters() +
                             "' - الصيغة: '" + pattern.getPatternId() + "'");

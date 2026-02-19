@@ -8,8 +8,6 @@ import java.util.Objects;
 public class Root implements Comparable<Root> {
     private final String rootLetters;
     private List<DerivedWord>  derivedWords;
-    private int frequency;
-    private boolean validated;
 
     public Root(String rootLetters) {
         if (rootLetters == null || rootLetters.length() != 3) {
@@ -17,16 +15,10 @@ public class Root implements Comparable<Root> {
         }
         this.rootLetters = rootLetters;
         this.derivedWords = new ArrayList<>();
-        this.frequency = 0;
-        this.validated = true;
     }
 
     public String getRootLetters() {
         return rootLetters;
-    }
-
-    public int getFrequency() {
-        return frequency;
     }
 
     public char getR1() {
@@ -41,21 +33,6 @@ public class Root implements Comparable<Root> {
         return this.getRootLetters().charAt(2);
     }
 
-    public boolean isValidated() {
-        return validated;
-    }
-
-    public void setValidated(boolean validated) {
-        this.validated = validated;
-    }
-
-    public void setFrequency(int frequency) {
-        this.frequency = frequency;
-    }
-
-    public void incrementFrequency() {
-        this.frequency++;
-    }
     public List<DerivedWord> getDerivedWords() {
         return derivedWords;
     }
@@ -65,7 +42,16 @@ public class Root implements Comparable<Root> {
     }
 
     public void addDerivedWord(DerivedWord derivedWord) {
-        this.derivedWords.add(derivedWord);
+        if(!getDerivedWords().contains(derivedWord)) {
+            this.derivedWords.add(derivedWord);
+        }else{
+            for (DerivedWord derivedWord1 : derivedWords) {
+                if (derivedWord1.equals(derivedWord)) {
+                    derivedWord1.incrementFrequency();
+                    return;
+                }
+            }
+        }
     }
 
     @Override
@@ -89,8 +75,6 @@ public class Root implements Comparable<Root> {
     public String toString() {
         return "Root{" +
                 "rootLetters='" + rootLetters + '\'' +
-                ", frequency=" + frequency +
-                ", validated=" + validated +
                 '}';
     }
 }
