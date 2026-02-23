@@ -70,6 +70,11 @@ public class RootRepository {
         return rootTree.getTreeHeight();
     }
 
+    /**Returns the underlying AVL tree for visualization.*/
+    public AVLTree<Root> getTree() {
+        return rootTree;
+    }
+
 
 
 }
