@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.arabicsearchengine.controllers.RootManagementController"
+      spacing="14" styleClass="view-container"
+      nodeOrientation="RIGHT_TO_LEFT"
+      prefWidth="720" prefHeight="600">
+
+    <padding>
+        <Insets top="20" right="24" bottom="20" left="24"/>
+    </padding>
+
+    <!-- Header -->
+    <HBox alignment="CENTER_RIGHT" spacing="12">
+        <FontIcon iconLiteral="mdi2d-database" iconSize="32" iconColor="#1B5E59"/>
+        <VBox spacing="2" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+            <Label text="إدارة الجذور" styleClass="view-title,arabic-text"/>
+            <Label text="إضافة وحذف والبحث في الجذور العربية" styleClass="arabic-text"
+                   style="-fx-text-fill: #5F5F5F; -fx-font-size: 12px;"/>
+        </VBox>
+        <Button text="تحميل من ملف" onAction="#loadFromFile" styleClass="secondary-button">
+            <graphic>
+                <FontIcon iconLiteral="mdi2u-upload" iconSize="16"/>
+            </graphic>
+        </Button>
+    </HBox>
+
+    <Separator/>
+
+    <!-- Input Sections -->
+    <HBox spacing="16" alignment="CENTER">
+        <!-- Add Section -->
+        <VBox spacing="10" HBox.hgrow="ALWAYS" styleClass="card" style="-fx-padding: 16;">
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <FontIcon iconLiteral="mdi2p-plus-circle" iconSize="18" iconColor="#1B5E59"/>
+                <Label text="إضافة جذر جديد" styleClass="form-section-header,arabic-text"
+                       style="-fx-font-size: 14px; -fx-padding: 0;"/>
+            </HBox>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="الجذر:" styleClass="arabic-text"
+                       style="-fx-font-weight: 600; -fx-font-size: 13px; -fx-text-fill: #1B5E59;"/>
+                <TextField fx:id="txtNewRoot" promptText="3 أحرف" prefWidth="100"
+                           styleClass="arabic-input" style="-fx-font-size: 15px; -fx-padding: 8;"
+                           HBox.hgrow="ALWAYS"/>
+                <Button text="إضافة" onAction="#addRoot" styleClass="primary-button"
+                        prefHeight="34">
+                    <graphic>
+                        <FontIcon iconLiteral="mdi2p-plus" iconSize="16" iconColor="white"/>
+                    </graphic>
+                </Button>
+            </HBox>
+        </VBox>
+
+        <!-- Search Section -->
+        <VBox spacing="10" HBox.hgrow="ALWAYS" styleClass="card" style="-fx-padding: 16;">
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <FontIcon iconLiteral="mdi2m-magnify" iconSize="18" iconColor="#1B5E59"/>
+                <Label text="البحث عن جذر" styleClass="form-section-header,arabic-text"
+                       style="-fx-font-size: 14px; -fx-padding: 0;"/>
+            </HBox>
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Label text="بحث:" styleClass="arabic-text"
+                       style="-fx-font-weight: 600; -fx-font-size: 13px; -fx-text-fill: #1B5E59;"/>
+                <TextField fx:id="txtSearchRoot" promptText="ابحث هنا..." prefWidth="100"
+                           styleClass="arabic-input" style="-fx-font-size: 15px; -fx-padding: 8;"
+                           HBox.hgrow="ALWAYS"/>
+                <Button text="بحث" onAction="#searchRoot" styleClass="secondary-button"
+                        prefHeight="34">
+                    <graphic>
+                        <FontIcon iconLiteral="mdi2m-magnify" iconSize="16"/>
+                    </graphic>
+                </Button>
+            </HBox>
+        </VBox>
+    </HBox>
+
+    <Separator/>
+
+    <!-- Root List & Info Panel -->
+    <HBox spacing="16" VBox.vgrow="ALWAYS">
+        <!-- Root List -->
+        <VBox spacing="8" HBox.hgrow="ALWAYS" style="-fx-min-height: 200;">
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <FontIcon iconLiteral="mdi2f-format-list-bulleted" iconSize="16" iconColor="#1B5E59"/>
+                <Label text="قائمة الجذور" styleClass="form-section-header,arabic-text"
+                       style="-fx-font-size: 14px; -fx-padding: 0;"/>
+            </HBox>
+            <ListView fx:id="rootListView" VBox.vgrow="ALWAYS" styleClass="item-list"
+                      style="-fx-min-height: 180; -fx-pref-height: 280;"/>
+        </VBox>
+
+        <!-- Info Panel -->
+        <VBox fx:id="rootInfoPane" styleClass="info-panel" spacing="12"
+              visible="false" managed="false" prefWidth="220" style="-fx-padding: 16;">
+            <HBox spacing="8" alignment="CENTER_RIGHT">
+                <FontIcon iconLiteral="mdi2i-information" iconSize="20" iconColor="#1B5E59"/>
+                <Label text="تفاصيل الجذر" styleClass="arabic-text"
+                       style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1B5E59;"/>
+            </HBox>
+            <Separator/>
+            <Label fx:id="lblRootInfo" styleClass="info-text,arabic-text" wrapText="true"
+                   style="-fx-font-size: 14px; -fx-line-spacing: 4;"/>
+            <Region VBox.vgrow="ALWAYS"/>
+            <Button text="عرض المشتقات" onAction="#showDerivatives"
+                    styleClass="primary-button" maxWidth="Infinity" prefHeight="36">
+                <graphic>
+                    <FontIcon iconLiteral="mdi2f-file-tree" iconSize="16" iconColor="white"/>
+                </graphic>
+            </Button>
+        </VBox>
+    </HBox>
+
+    <!-- Actions Footer -->
+    <HBox spacing="12" alignment="CENTER_LEFT" style="-fx-padding: 8 0 0 0;">
+        <Button text="حذف المحدد" onAction="#deleteSelectedRoot" styleClass="danger-button"
+                prefHeight="34">
+            <graphic>
+                <FontIcon iconLiteral="mdi2d-delete" iconSize="16"/>
+            </graphic>
+        </Button>
+    </HBox>
+</VBox>

@@ -1,0 +1,57 @@
+# Arabic Triliteral Roots
+# Each line contains a 3-letter Arabic root
+# Lines starting with # are comments
+
+# Common roots related to writing
+كتب
+قرأ
+علم
+درس
+فهم
+
+# Common roots related to work/creation
+عمل
+صنع
+خلق
+بنى
+
+# Common roots related to speech
+قول
+كلم
+نطق
+سمع
+
+# Common roots related to movement
+ذهب
+جاء
+مشى
+ركض
+سفر
+
+# Common roots related to emotions
+حبب
+كره
+فرح
+حزن
+
+# Common roots related to seeing/knowing
+نظر
+رأى
+بصر
+شهد
+
+# Common roots related to eating/drinking
+أكل
+شرب
+طعم
+
+# Common roots related to opening/closing
+فتح
+غلق
+سدد
+
+# Common roots related to giving/taking
+أخذ
+عطى
+منح
+وهب

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.arabicsearchengine.controllers.WordGenerationController"
+      spacing="14" styleClass="view-container"
+      nodeOrientation="RIGHT_TO_LEFT"
+      prefWidth="720" prefHeight="640">
+
+    <padding>
+        <Insets top="20" right="24" bottom="20" left="24"/>
+    </padding>
+
+    <!-- Header -->
+    <HBox alignment="CENTER_RIGHT" spacing="12">
+        <FontIcon iconLiteral="mdi2f-factory" iconSize="32" iconColor="#1B5E59"/>
+        <VBox spacing="2" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+            <Label text="توليد الكلمات" styleClass="view-title,arabic-text"/>
+            <Label text="اشتقاق الكلمات من الجذور والأوزان" styleClass="arabic-text"
+                   style="-fx-text-fill: #5F5F5F; -fx-font-size: 12px;"/>
+        </VBox>
+        <Button text="توليد الكل" onAction="#generateAllDerivatives" styleClass="secondary-button">
+            <graphic>
+                <FontIcon iconLiteral="mdi2r-repeat" iconSize="16"/>
+            </graphic>
+        </Button>
+    </HBox>
+
+    <Separator/>
+
+    <!-- Input Section -->
+    <VBox styleClass="card" spacing="14" style="-fx-padding: 18;">
+        <HBox spacing="8" alignment="CENTER_LEFT">
+            <FontIcon iconLiteral="mdi2c-creation" iconSize="18" iconColor="#1B5E59"/>
+            <Label text="توليد كلمة جديدة" styleClass="form-section-header,arabic-text"
+                   style="-fx-font-size: 15px; -fx-padding: 0;"/>
+        </HBox>
+
+        <HBox spacing="16" alignment="CENTER_RIGHT">
+            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                <Label text="الجذر" styleClass="arabic-text"
+                       style="-fx-font-weight: 600; -fx-font-size: 13px; -fx-text-fill: #1B5E59;"/>
+                <TextField fx:id="txtRoot" promptText="مثال: كتب"
+                           styleClass="arabic-input" style="-fx-font-size: 16px; -fx-padding: 10;"/>
+            </VBox>
+            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                <Label text="الوزن" styleClass="arabic-text"
+                       style="-fx-font-weight: 600; -fx-font-size: 13px; -fx-text-fill: #1B5E59;"/>
+                <ComboBox fx:id="cmbPattern" promptText="اختر وزناً" maxWidth="Infinity"
+                          style="-fx-font-size: 14px; -fx-pref-height: 38;"/>
+            </VBox>
+            <VBox spacing="6" alignment="BOTTOM_CENTER">
+                <Button text="توليد" onAction="#generateWord" styleClass="primary-button"
+                        prefWidth="100" prefHeight="38">
+                    <graphic>
+                        <FontIcon iconLiteral="mdi2c-creation" iconSize="18" iconColor="white"/>
+                    </graphic>
+                </Button>
+            </VBox>
+        </HBox>
+    </VBox>
+
+    <!-- Single Word Result -->
+    <VBox fx:id="singleResultPane" styleClass="result-box" spacing="12"
+          visible="false" managed="false" style="-fx-padding: 20;">
+        <Label text="نتيجة التوليد" styleClass="arabic-text"
+               style="-fx-text-fill: rgba(255,255,255,0.85); -fx-font-size: 12px; -fx-font-weight: 600;"/>
+        <HBox spacing="20" alignment="CENTER">
+            <VBox alignment="CENTER" spacing="4">
+                <Label text="الجذر" styleClass="arabic-text"
+                       style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px;"/>
+                <Label fx:id="lblResultRoot" styleClass="result-value-arabic,arabic-text"
+                       style="-fx-font-size: 26px;"/>
+            </VBox>
+            <FontIcon iconLiteral="mdi2p-plus" iconSize="22" iconColor="rgba(255,255,255,0.6)"/>
+            <VBox alignment="CENTER" spacing="4">
+                <Label text="الوزن" styleClass="arabic-text"
+                       style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px;"/>
+                <Label fx:id="lblResultPattern" styleClass="result-value-arabic,arabic-text"
+                       style="-fx-font-size: 26px;"/>
+            </VBox>
+            <FontIcon iconLiteral="mdi2e-equal" iconSize="22" iconColor="rgba(255,255,255,0.6)"/>
+            <VBox alignment="CENTER" spacing="4">
+                <Label text="الكلمة" styleClass="arabic-text"
+                       style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px;"/>
+                <Label fx:id="lblResultWord" styleClass="result-value-arabic,arabic-text,highlight"
+                       style="-fx-font-size: 28px;"/>
+            </VBox>
+        </HBox>
+    </VBox>
+
+    <Separator/>
+
+    <!-- Derivatives Table -->
+    <VBox spacing="8" VBox.vgrow="ALWAYS" style="-fx-min-height: 180;">
+        <HBox alignment="CENTER_LEFT" spacing="8">
+            <FontIcon iconLiteral="mdi2f-file-tree" iconSize="16" iconColor="#1B5E59"/>
+            <Label text="المشتقات المتاحة" styleClass="form-section-header,arabic-text"
+                   style="-fx-font-size: 14px; -fx-padding: 0;"/>
+        </HBox>
+        <TableView fx:id="derivativesTable" VBox.vgrow="ALWAYS" styleClass="data-table"
+                   style="-fx-min-height: 150; -fx-pref-height: 220;">
+            <columns>
+                <TableColumn fx:id="colPattern" text="الوزن" prefWidth="130" minWidth="100"/>
+                <TableColumn fx:id="colDerivedWord" text="الكلمة المشتقة" prefWidth="160" minWidth="120"/>
+                <TableColumn fx:id="colPatternDesc" text="الوصف" prefWidth="280" minWidth="180"/>
+            </columns>
+            <placeholder>
+                <VBox alignment="CENTER" spacing="10" style="-fx-padding: 24;">
+                    <FontIcon iconLiteral="mdi2f-file-document-outline" iconSize="36" iconColor="#9A9A9A"/>
+                    <Label text="النتائج ستظهر هنا" styleClass="arabic-text"
+                           style="-fx-text-fill: #9A9A9A; -fx-font-size: 13px;"/>
+                    <Label text="أدخل جذراً واختر وزناً للتوليد" styleClass="arabic-text"
+                           style="-fx-text-fill: #BDBDBD; -fx-font-size: 11px;"/>
+                </VBox>
+            </placeholder>
+        </TableView>
+    </VBox>
+
+    <!-- Export Footer -->
+    <HBox alignment="CENTER_LEFT" style="-fx-padding: 6 0 0 0;">
+        <Button text="تصدير النتائج" onAction="#exportResults" styleClass="secondary-button"
+                prefHeight="34">
+            <graphic>
+                <FontIcon iconLiteral="mdi2e-export" iconSize="16"/>
+            </graphic>
+        </Button>
+    </HBox>
+</VBox>

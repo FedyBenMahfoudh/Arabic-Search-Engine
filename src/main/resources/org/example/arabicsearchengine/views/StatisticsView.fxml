@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.arabicsearchengine.controllers.StatisticsController"
+      spacing="14" styleClass="view-container"
+      nodeOrientation="RIGHT_TO_LEFT"
+      prefWidth="720" prefHeight="640">
+
+    <padding>
+        <Insets top="20" right="24" bottom="20" left="24"/>
+    </padding>
+
+    <!-- Header -->
+    <HBox alignment="CENTER_RIGHT" spacing="12">
+        <FontIcon iconLiteral="mdi2t-tree" iconSize="32" iconColor="#1B5E59"/>
+        <VBox spacing="2" alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+            <Label text="شجرة الجذور" styleClass="view-title,arabic-text"/>
+            <Label text="تصور بنية شجرة AVL التي تخزن الجذور العربية" styleClass="arabic-text"
+                   style="-fx-text-fill: #5F5F5F; -fx-font-size: 12px;"/>
+        </VBox>
+        <Button text="تحديث" onAction="#refreshTree" styleClass="secondary-button"
+                prefHeight="34">
+            <graphic>
+                <FontIcon iconLiteral="mdi2r-refresh" iconSize="16"/>
+            </graphic>
+        </Button>
+    </HBox>
+
+    <Separator/>
+
+    <!-- Stats Summary Cards -->
+    <HBox spacing="16" alignment="CENTER_RIGHT">
+        <VBox spacing="4" alignment="CENTER" styleClass="card"
+              style="-fx-padding: 12 24; -fx-min-width: 140;">
+            <FontIcon iconLiteral="mdi2a-arrow-expand-vertical" iconSize="20" iconColor="#1B5E59"/>
+            <Label text="ارتفاع الشجرة" styleClass="arabic-text"
+                   style="-fx-font-size: 11px; -fx-text-fill: #5F5F5F;"/>
+            <Label fx:id="lblTreeHeight" text="0" styleClass="arabic-text"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1B5E59;"/>
+        </VBox>
+        <VBox spacing="4" alignment="CENTER" styleClass="card"
+              style="-fx-padding: 12 24; -fx-min-width: 140;">
+            <FontIcon iconLiteral="mdi2c-counter" iconSize="20" iconColor="#D4A95E"/>
+            <Label text="عدد العقد" styleClass="arabic-text"
+                   style="-fx-font-size: 11px; -fx-text-fill: #5F5F5F;"/>
+            <Label fx:id="lblNodeCount" text="0" styleClass="arabic-text"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #D4A95E;"/>
+        </VBox>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label fx:id="lblStatus" text="" styleClass="arabic-text"
+               style="-fx-text-fill: #5F5F5F; -fx-font-size: 12px;"/>
+    </HBox>
+
+    <Separator/>
+
+    <!-- Tree Visualisation Area -->
+    <VBox spacing="8" VBox.vgrow="ALWAYS" style="-fx-min-height: 250;">
+        <HBox alignment="CENTER_LEFT" spacing="8">
+            <FontIcon iconLiteral="mdi2t-tree" iconSize="16" iconColor="#1B5E59"/>
+            <Label text="رسم الشجرة" styleClass="form-section-header,arabic-text"
+                   style="-fx-font-size: 14px; -fx-padding: 0;"/>
+        </HBox>
+
+        <!-- Legend -->
+        <HBox spacing="20" alignment="CENTER_RIGHT" style="-fx-padding: 4 0;">
+            <HBox spacing="6" alignment="CENTER_RIGHT">
+                <Region style="-fx-background-color: #1B5E59; -fx-background-radius: 50; -fx-min-width: 14; -fx-min-height: 14;"/>
+                <Label text="عقدة داخلية" styleClass="arabic-text" style="-fx-font-size: 11px; -fx-text-fill: #5F5F5F;"/>
+            </HBox>
+            <HBox spacing="6" alignment="CENTER_RIGHT">
+                <Region style="-fx-background-color: #34A89C; -fx-background-radius: 50; -fx-min-width: 14; -fx-min-height: 14;"/>
+                <Label text="ورقة" styleClass="arabic-text" style="-fx-font-size: 11px; -fx-text-fill: #5F5F5F;"/>
+            </HBox>
+            <HBox spacing="6" alignment="CENTER_RIGHT">
+                <Region style="-fx-background-color: #B8936A; -fx-min-width: 20; -fx-min-height: 3;"/>
+                <Label text="رابط" styleClass="arabic-text" style="-fx-font-size: 11px; -fx-text-fill: #5F5F5F;"/>
+            </HBox>
+        </HBox>
+
+        <ScrollPane fx:id="treeScrollPane" fitToWidth="true" VBox.vgrow="ALWAYS"
+                    style="-fx-background-color: transparent; -fx-border-color: #E0DEDA; -fx-border-radius: 8; -fx-background-radius: 8;">
+            <Pane fx:id="treeCanvas" style="-fx-background-color: #FAFAF8;"
+                  minWidth="800" minHeight="400"/>
+        </ScrollPane>
+    </VBox>
+
+</VBox>

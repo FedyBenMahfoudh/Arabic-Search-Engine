@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+    xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.arabicsearchengine.controllers.MainController" prefHeight="700.0" prefWidth="1050.0" styleClass="main-container">
+
+    <!-- Top: Title Bar -->
+    <top>
+        <HBox styleClass="header" alignment="CENTER_RIGHT" spacing="16">
+            <VBox spacing="2">
+                <Label text="محرك البحث الصرفي العربي" styleClass="title-arabic,arabic-text"/>
+            </VBox>
+            <FontIcon iconLiteral="mdi2t-translate" iconSize="28" iconColor="#1B5E59"/>
+        </HBox>
+    </top>
+
+    <!-- Left: Navigation Sidebar -->
+    <right>
+        <VBox styleClass="sidebar" spacing="6" prefWidth="240" style="-fx-padding: 24 0 24 0;">
+            <Label text="القائمة الرئيسية" styleClass="sidebar-title" alignment="CENTER" maxWidth="Infinity">
+                <padding>
+                    <Insets left="20" right="20"/>
+                </padding>
+            </Label>
+
+            <Button fx:id="btnRoots" text="إدارة الجذور" styleClass="nav-button" onAction="#showRootManagement" maxWidth="Infinity">
+                <graphic>
+                    <FontIcon iconLiteral="mdi2d-database" iconSize="18"/>
+                </graphic>
+            </Button>
+
+            <Button fx:id="btnPatterns" text="إدارة الأوزان" styleClass="nav-button" onAction="#showPatternManagement" maxWidth="Infinity">
+                <graphic>
+                    <FontIcon iconLiteral="mdi2s-shape" iconSize="18"/>
+                </graphic>
+            </Button>
+
+            <Button fx:id="btnGenerate" text="توليد الكلمات" styleClass="nav-button" onAction="#showWordGeneration" maxWidth="Infinity">
+                <graphic>
+                    <FontIcon iconLiteral="mdi2f-factory" iconSize="18"/>
+                </graphic>
+            </Button>
+
+            <Button fx:id="btnRootDerivation" text="الجذور والمشتقات" styleClass="nav-button" onAction="#showRootDerivation" maxWidth="Infinity">
+                <graphic>
+                    <FontIcon iconLiteral="mdi2f-file-tree" iconSize="18"/>
+                </graphic>
+            </Button>
+
+            <Button fx:id="btnValidate" text="التحقق الصرفي" styleClass="nav-button" onAction="#showValidation" maxWidth="Infinity">
+                <graphic>
+                    <FontIcon iconLiteral="mdi2c-check-decagram" iconSize="18"/>
+                </graphic>
+            </Button>
+
+            <Separator style="-fx-padding: 8 0;">
+            </Separator>
+
+            <Button fx:id="btnStats" text="الإحصائيات" styleClass="nav-button" onAction="#showStatistics" maxWidth="Infinity">
+                <graphic>
+                    <FontIcon iconLiteral="mdi2c-chart-bar" iconSize="18"/>
+                </graphic>
+            </Button>
+
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <VBox spacing="6" alignment="CENTER" style="-fx-padding: 0 0 16 0;">
+                <Label text="الإصدار 1.0" styleClass="version-label"/>
+                <FontIcon iconLiteral="mdi2g-github" iconSize="14" iconColor="#9A9A9A"/>
+            </VBox>
+        </VBox>
+    </right>
+
+    <!-- Center: Dynamic Content Area -->
+    <center>
+        <StackPane fx:id="contentArea" styleClass="content-area">
+            <!-- Welcome Screen (Default) -->
+            <VBox fx:id="welcomePane" alignment="CENTER" spacing="24" styleClass="view-container" style="-fx-max-width: 600; -fx-max-height: 600;">
+                <FontIcon iconLiteral="mdi2b-book-open-page-variant" iconSize="72" iconColor="#1B5E59"/>
+                <Label text="مرحباً بك في المحرك الصرفي" styleClass="welcome-title,arabic-text">
+                    <font>
+                        <Font size="32"/>
+                    </font>
+                </Label>
+                <Label text="نظام متكامل لتوليد وتحليل الكلمات العربية" styleClass="welcome-subtitle,arabic-text">
+                    <font>
+                        <Font size="14"/>
+                    </font>
+                </Label>
+
+                <HBox spacing="20" alignment="CENTER" style="-fx-padding: 32 0 0 0;">
+                    <VBox styleClass="result-box" alignment="CENTER" minWidth="140" style="-fx-background-color: linear-gradient(to right, #1B5E59, #34A89C); -fx-padding: 20;">
+                        <FontIcon iconLiteral="mdi2d-database" iconSize="28" iconColor="white"/>
+                        <Label fx:id="lblRootCountDisplay" text="0" styleClass="result-value-arabic,arabic-text"/>
+                        <Label text="جذر محفوظ" styleClass="arabic-text" style="-fx-text-fill: white; -fx-font-size: 12;"/>
+                    </VBox>
+                    <VBox styleClass="result-box" alignment="CENTER" minWidth="140" style="-fx-background-color: linear-gradient(to right, #D4A95E, #E8C58F); -fx-padding: 20;">
+                        <FontIcon iconLiteral="mdi2s-shape-outline" iconSize="28" iconColor="white"/>
+                        <Label fx:id="lblPatternCountDisplay" text="0" styleClass="result-value-arabic,arabic-text"/>
+                        <Label text="وزن صرفي" styleClass="arabic-text" style="-fx-text-fill: white; -fx-font-size: 12;"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </StackPane>
+    </center>
+
+    <!-- Bottom: Status Bar -->
+    <bottom>
+        <HBox styleClass="status-bar" spacing="16" alignment="CENTER_LEFT">
+            <padding>
+                <Insets top="8" right="16" bottom="8" left="16"/>
+            </padding>
+            <FontIcon iconLiteral="mdi2i-information-outline" iconSize="14" iconColor="#5F5F5F"/>
+            <Label fx:id="lblStatus" text="جاهز" styleClass="arabic-text" style="-fx-text-fill: #5F5F5F; -fx-font-size: 12;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="lblRootCount" text="الجذور: 0" styleClass="arabic-text" style="-fx-text-fill: #5F5F5F; -fx-font-size: 12;"/>
+            <Label fx:id="lblPatternCount" text="الأوزان: 0" styleClass="arabic-text" style="-fx-text-fill: #5F5F5F; -fx-font-size: 12;"/>
+        </HBox>
+    </bottom>
+</BorderPane>
